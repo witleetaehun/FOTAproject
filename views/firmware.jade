@@ -41,6 +41,7 @@ block content
 								.modal-body
 									form(method='POST', action='upload' , enctype="multipart/form-data")
 										input(type="file",name='upfile')
+										p(style="text-align:center;") 파일 업로드는 지정된 경로에만 가능합니다.
 										button(type='submit' ,style="float:right; margin-bottom:10px;") file upload
 								div(style="clear:both;")
 				.table-responsive(style="clear:both;")
@@ -55,13 +56,22 @@ block content
 						tbody
 							form(method='POST', action='/download/fileDown' , name='downloadForm')
 								input(type='hidden',name='path' , id='fileValue')
+							-if(!totalfile.length)
+								tr
+									td
+										a(href="/firmware")
+											span.glyphicon.glyphicon-folder-open &nbsp;	
+							-else
 							-for(var i in totalfile)
 								tr
-									-if(totalfile[i].type=='d')
+									-if(totalfile[i].filetype=='directory')
 										td
-											a(href='#' , style='cursor:pointer;') #{totalfile[i].name}
+											a(href="javascript:alert('폴더 이동은 제한되어 있습니다.')")
+												span.glyphicon.glyphicon-folder-open &nbsp;#{totalfile[i].filename}											
 									-else
 										td 
-											a(href="javascript:downloadAsPost('#{filepath}/#{totalfile[i].name}');") #{totalfile[i].name}
+											a(href="javascript:downloadAsPost('#{filepath}/#{totalfile[i].filename}');") #{totalfile[i].filename}
 									td= totalfile[i].size
-									td= totalfile[i].date					
+									td= totalfile[i].birthtime
+									td
+										button.btn.btn-secondary(type='button' onclick="deleteProc('#{totalfile[i].filename}')") 삭제

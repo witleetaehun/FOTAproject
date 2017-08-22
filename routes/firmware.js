@@ -2,62 +2,55 @@
 /*
  * GET users listing.
  */
-/*var JSFtp = require("jsftp");
-var Ftp = new JSFtp({
-	  host: "118.40.113.129",
-	  port: 40021, // defaults to 21 
-	  user: "root", // defaults to "anonymous" 
-	  pass: "1234", // defaults to "@anonymous"
-	  debugMode: true
-});*/
-var Fs = require('fs');
-var express = require('express');
-var app = express();
+
+var fs = require('fs');
 var path = require('path');
 var filePath = path.join( __dirname, '../download' );
 var filePathre = filePath.replace(/\\/gi,"/");
 var remotedirPath = "/Developer/FOTA_nodeE/FOTA_nodeE/download";
-function number_to_human_size(x) {
-	  var s = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'];
-	  var e = Math.floor(Math.log(x) / Math.log(1024));
-	  return (x / Math.pow(1024, e)).toFixed(2) + " " + s[e];
+function bytesToSize(bytes) {
+	   var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+	   if (bytes == 0) return '0 Byte';
+	   var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+	   return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 	};
-var totalfile = new Array();
-
+var totalfile;
 exports.firmware = function(req, res){
-	console.log("session!!! : "+req.session.user);
-		  if(req.session.user){	
-			  console.log(req.query.upfilename);				
-			  var Client = require('ftp');
-			  var c = new Client();			  
-			  c.connect({
-				  host: "118.40.113.129",
-				  port: 30021, // defaults to 21 
-				  user: "genotech", // defaults to "anonymous" 
-				  password: "1234", // defaults to "@anonymous"
-			  });			  
-			  c.on('ready', function() {
-				  //var list_index = 0;
-			    c.list(remotedirPath,function(cerr, list) {
-			      if (cerr){console.dir(cerr); throw err;}
-			      list.forEach(function(file , index) {
-			    	  //console.log(list[index].date);
-			    	
-			    	  list[index].size = list[index].size>0?number_to_human_size(list[index].size):0+" bytes";
-			    	  console.log(list[index].name);
-			    	  
-			    	  //console.dir(list[index].name);
-					  });
-			      
-			      totalfile = list;
-			      res.render('firmware', {
+	//console.log("session!!! : "+req.session.user);
+		  if(req.session.user){ 
+			  var  _path = path.join(__dirname, '../download/');			  
+			  fs.readdir(_path, function (err, files) {
+				  totalfile = new Array();
+				  if(!files.length){
+					  res.render('firmware', {
+						  filepath: filePathre,
+						  totalfile: totalfile
+					});
+				  }
+				  
+				  if(err) throw err;
+				  
+				  files.forEach(function(file , index) {			 
+				    console.log(_path+file);
+				    fs.stat(_path+file, function(err, stats) {
+				    	stats["filetype"] = stats.isDirectory()==true?"directory":"file";
+				    	stats["size"] = bytesToSize(stats["size"]);
+				    	//console.log(typeof(stats["size"]));
+				    	stats["filename"]=files[index];
+				    	totalfile[index] = stats;
+				      
+				    	//console.log(totalfile[1].filename);
+				    	
+				    });
+				  });	  
+			  });
+			  setTimeout(function(){
+				  res.render('firmware', {
 					  filepath: filePathre,
 					  totalfile: totalfile
 				  });
-			      c.end();
-			    });
-			  });
-			
+			  }, 200);
+			  
 			  
 		  }
 		  else{

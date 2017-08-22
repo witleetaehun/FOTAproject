@@ -11,7 +11,7 @@ var fs = require('fs')
 exports.archiver = function(req, res){
 	//console.log(__dirname+"/../download/hello.txt");
 
-	var origin_Fname = req.query.filename.split(".")[0];
+	/*var origin_Fname = req.query.filename.split(".")[0];
 	//create a file to stream archive data to.	    	
 	var output = fs.createWriteStream(path.join(__dirname, '../download' , origin_Fname+".zip"));
 	var archive = archiver('zip', {
@@ -35,13 +35,13 @@ exports.archiver = function(req, res){
 	archive.pipe(output);
 	var file1 = path.join(__dirname, '../download' , req.query.filename);
 	archive.file(file1, { name:  req.query.filename});	    	
-	archive.finalize();
+	archive.finalize();*/
 
 	/*fs.unlink(path.join(__dirname, '../download' , req.query.filename), function (err) {
 		if (err) throw err;
 		console.log('successfully deleted');
 	});*/
-	console.log(req.query.filename);
+	console.log("archiver : "+req.query.filename);
 	res.redirect("/firmware");
 };
 

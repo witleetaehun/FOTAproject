@@ -19,6 +19,7 @@
     "jade": "^1.11.0",
     "jsftp": "^2.0.0",
     "jsonfile": "^3.0.1",
+    "md5": "^2.2.1",
     "method-override": "^2.3.9",
     "mkdirp": "^0.5.1",
     "mongoose": "^4.11.3",

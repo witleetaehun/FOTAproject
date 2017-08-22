@@ -12,6 +12,8 @@ var express = require('express')
   , device_monitor = require('./routes/device_monitor')
   , loginproc = require('./routes/loginproc')
   , uploadproc = require('./routes/uploadproc')
+  , uparchiver = require('./routes/archiver')
+  , deleteproc = require('./routes/deleteproc')
   , morgan = require('morgan')
   , methodOverride = require('method-override')
   , favicon = require('serve-favicon')
@@ -123,6 +125,7 @@ app.post('/download/:file',function(req, res){
 });
 
 app.post('/upload' , function(req, res){
+	//console.log("asdfasdfa : "+req.body.upfile); 
 	upload(req, res, function (err) {
 	    if (err) {
 	      // An error occurred when uploading
@@ -139,6 +142,8 @@ app.post('/upload' , function(req, res){
 	  })
 });
 app.get('/uploadproc', uploadproc.uploadproc);
+app.get('/archiver', uparchiver.archiver);
+app.get('/deleteproc', deleteproc.deleteproc);
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
