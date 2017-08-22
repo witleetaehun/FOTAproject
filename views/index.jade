@@ -1,0 +1,20 @@
+extends layout
+
+block content
+	section#container
+		.logo_wrap
+			img(src='images/logo.jpg')
+		h1 FOTA PAGE
+		.login_form_wrap
+			form.form-horizontal(action='loginproc' method='post')
+				.form-group
+					label.col-sm-2.control-label(for='inputEmail3') E-mail
+					.col-sm-10
+						input#inputEmail3.form-control(type='email', placeholder='Email' , name='email')
+				.form-group
+					label.col-sm-2.control-label(for='inputPassword3') Password
+					.col-sm-10
+						input#inputPassword3.form-control(type='password', placeholder='Password' , name='pass')
+				.form-group
+					.col-sm-offset-2.col-sm-10
+						button.btn.btn-default(type='submit') Sign in
