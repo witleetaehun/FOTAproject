@@ -11,7 +11,7 @@ var express = require('express')
   , device_record = require('./routes/device_record')
   , device_monitor = require('./routes/device_monitor')
   , loginproc = require('./routes/loginproc')
-  , uploadproc = require('./routes/uploadproc')
+  , createMOandDD = require('./routes/createMOandDD')
   , uparchiver = require('./routes/archiver')
   , deleteproc = require('./routes/deleteproc')
   , morgan = require('morgan')
@@ -94,29 +94,41 @@ app.get('/session', function(req, res){
 
 
 app.post('/loginproc', function(req, res){
-		var sql = "select count(*) cnt from user where email = ? and password = password(?)";
+		var sql = "select * from user where email = ? and password = sha1(?)";
 		var email = req.body.email;
 		var pass = req.body.pass
 		var params = [email , pass];
-		req.session.user = email;
+		
 	  connection.query(sql,params, function(err, rows , fields) {
 	    if(err) throw err;
 
 	    //console.log('The solution is: ', rows);
-	    var cnt = rows[0].cnt;
-	    console.log("session id :"+req.session.user);
+	    //var cnt = rows[0].cnt;
+	    //console.log("session id :"+req.session.user);
+	    //console.log(rows.length);
 	    //console.log(cnt);
-	    if(cnt==1){
-	    	res.send("<script>alert('정상 로그인 되었습니다');location.href='/firmware';</script>");
+	    if(rows.length==0){
+	    	res.send("<script>alert('계정정보를 확인해주십시오.');location.href='/';</script>");
 	    }
 	    else{
-	    	res.send("<script>alert('계정정보를 확인해주십시오.');location.href='/';</script>");
+	    	if(rows[0].class==1)
+	    		req.session.uclass = "1";
+	    	else
+	    		req.session.uclass = "0";
+	    	
+	    	req.session.user = email;
+	    	res.send("<script>alert('정상 로그인 되었습니다');location.href='/firmware';</script>");	    	
 	    }
 	    
 	  });
 });
 
-
+app.get('/logout', function(req, res){
+	req.session.destroy(function(){
+		req.session;
+	}); 
+	res.redirect('/'); 
+});
 
 app.post('/download/:file',function(req, res){
 	var down = req.body.path;
@@ -134,14 +146,12 @@ app.post('/upload' , function(req, res){
 	    }	    
 	    else{
 	    	
-			//res.send("<script>alert('업로드 되었습니다.');location.href='/firmware';</script>");
-	    	//console.log(req.body);
-	    	
-			res.redirect('/uploadproc?filename='+req.file.originalname);
+			res.send("<script>alert('업로드 되었습니다.');location.href='/firmware';</script>");
+	    	//console.log(req.body);			
 	    }
 	  })
 });
-app.get('/uploadproc', uploadproc.uploadproc);
+app.get('/createMOandDD', createMOandDD.createMOandDD);
 app.get('/archiver', uparchiver.archiver);
 app.get('/deleteproc', deleteproc.deleteproc);
 http.createServer(app).listen(app.get('port'), function(){

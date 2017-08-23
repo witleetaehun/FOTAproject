@@ -18,6 +18,7 @@ var totalfile;
 exports.firmware = function(req, res){
 	//console.log("session!!! : "+req.session.user);
 		  if(req.session.user){ 
+			  console.log("uclass : "+req.session.uclass);
 			  var  _path = path.join(__dirname, '../download/');			  
 			  fs.readdir(_path, function (err, files) {
 				  totalfile = new Array();
@@ -27,7 +28,6 @@ exports.firmware = function(req, res){
 						  totalfile: totalfile
 					});
 				  }
-				  
 				  if(err) throw err;
 				  
 				  files.forEach(function(file , index) {			 
@@ -35,29 +35,20 @@ exports.firmware = function(req, res){
 				    fs.stat(_path+file, function(err, stats) {
 				    	stats["filetype"] = stats.isDirectory()==true?"directory":"file";
 				    	stats["size"] = bytesToSize(stats["size"]);
-				    	//console.log(typeof(stats["size"]));
 				    	stats["filename"]=files[index];
 				    	totalfile[index] = stats;
-				      
-				    	//console.log(totalfile[1].filename);
-				    	
 				    });
 				  });	  
 			  });
 			  setTimeout(function(){
 				  res.render('firmware', {
 					  filepath: filePathre,
-					  totalfile: totalfile
+					  totalfile: totalfile,
+					  uclass: req.session.uclass
 				  });
 			  }, 200);
-			  
-			  
 		  }
 		  else{
 			  res.send("<script>alert('로그인이 필요한 페이지입니다.');location.href='/';</script>");
 		  }
-	
-	
-  
-  
 };

@@ -26,7 +26,8 @@ block content
 						span.text-muted Something else
 				h2.sub-header Section title
 				div
-					button.btn.btn-default(data-target='#layerpop', data-toggle='modal') File upload
+					-if(uclass=="1")
+						button.btn.btn-default(data-target='#layerpop', data-toggle='modal') File upload
 					br
 					#layerpop.modal.fade
 						.modal-dialog
@@ -42,15 +43,16 @@ block content
 									form(method='POST', action='upload' , enctype="multipart/form-data")
 										input(type="file",name='upfile')
 										p(style="text-align:center;") 파일 업로드는 지정된 경로에만 가능합니다.
-										button(type='submit' ,style="float:right; margin-bottom:10px;") file upload
+										button(type='submit' ,style="float:right; margin-bottom:10px;") File Upload
 								div(style="clear:both;")
 				.table-responsive(style="clear:both;")
 					table.table.table-striped
 						thead
 							tr
-								th filename
-								th size(byte)
-								th date
+								th Filename
+								th Size
+								th Date
+								th
 								<!--th Header
 								th Header-->
 						tbody
@@ -58,7 +60,7 @@ block content
 								input(type='hidden',name='path' , id='fileValue')
 							-if(!totalfile.length)
 								tr
-									td
+									td(colspan="4")
 										a(href="/firmware")
 											span.glyphicon.glyphicon-folder-open &nbsp;	
 							-else
@@ -73,5 +75,7 @@ block content
 											a(href="javascript:downloadAsPost('#{filepath}/#{totalfile[i].filename}');") #{totalfile[i].filename}
 									td= totalfile[i].size
 									td= totalfile[i].birthtime
-									td
-										button.btn.btn-secondary(type='button' onclick="deleteProc('#{totalfile[i].filename}')") 삭제
+									td										
+										-if(uclass=="1")
+											button.btn.btn-primary(type='button' onclick="createMOandDD('#{totalfile[i].filename}','#{totalfile[i].birthtime}')") MO,DD 생성
+											button.btn.btn-danger(type='button' onclick="deleteProc('#{totalfile[i].filename}')") 삭제										
