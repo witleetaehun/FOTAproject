@@ -37,6 +37,9 @@ function deleteProc(file){
 }
 
 function createMOandDD(file , time){
-	location.href="/createMOandDD?filename="+file+"&time="+time;
+	if(file.split(".")[1]=="xml")
+		alert("확장자가 xml인 파일은 MO,DD생성이 불가능합니다.");
+	else		
+		location.href="/createMOandDD?filename="+file+"&time="+time;
 	//alert(file);
 }

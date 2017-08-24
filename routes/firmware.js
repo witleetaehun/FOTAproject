@@ -25,7 +25,8 @@ exports.firmware = function(req, res){
 				  if(!files.length){
 					  res.render('firmware', {
 						  filepath: filePathre,
-						  totalfile: totalfile
+						  totalfile: totalfile,
+						  uclass: req.session.uclass
 					});
 				  }
 				  if(err) throw err;
@@ -38,15 +39,15 @@ exports.firmware = function(req, res){
 				    	stats["filename"]=files[index];
 				    	totalfile[index] = stats;
 				    });
-				  });	  
-			  });
-			  setTimeout(function(){
-				  res.render('firmware', {
-					  filepath: filePathre,
-					  totalfile: totalfile,
-					  uclass: req.session.uclass
 				  });
-			  }, 200);
+			  });
+				  setTimeout(function(){
+					  res.render('firmware', {
+						  filepath: filePathre,
+						  totalfile: totalfile,
+						  uclass: req.session.uclass
+					  });
+				  }, 500);
 		  }
 		  else{
 			  res.send("<script>alert('로그인이 필요한 페이지입니다.');location.href='/';</script>");

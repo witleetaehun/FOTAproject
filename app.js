@@ -102,11 +102,6 @@ app.post('/loginproc', function(req, res){
 	  connection.query(sql,params, function(err, rows , fields) {
 	    if(err) throw err;
 
-	    //console.log('The solution is: ', rows);
-	    //var cnt = rows[0].cnt;
-	    //console.log("session id :"+req.session.user);
-	    //console.log(rows.length);
-	    //console.log(cnt);
 	    if(rows.length==0){
 	    	res.send("<script>alert('계정정보를 확인해주십시오.');location.href='/';</script>");
 	    }

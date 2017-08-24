@@ -28,6 +28,8 @@ block content
 				div
 					-if(uclass=="1")
 						button.btn.btn-default(data-target='#layerpop', data-toggle='modal') File upload
+					-else
+					
 					br
 					#layerpop.modal.fade
 						.modal-dialog
@@ -53,29 +55,28 @@ block content
 								th Size
 								th Date
 								th
-								<!--th Header
-								th Header-->
 						tbody
 							form(method='POST', action='/download/fileDown' , name='downloadForm')
 								input(type='hidden',name='path' , id='fileValue')
-							-if(!totalfile.length)
+							-if(totalfile.length==0)
 								tr
 									td(colspan="4")
 										a(href="/firmware")
 											span.glyphicon.glyphicon-folder-open &nbsp;	
 							-else
-							-for(var i in totalfile)
-								tr
-									-if(totalfile[i].filetype=='directory')
-										td
-											a(href="javascript:alert('폴더 이동은 제한되어 있습니다.')")
-												span.glyphicon.glyphicon-folder-open &nbsp;#{totalfile[i].filename}											
-									-else
-										td 
-											a(href="javascript:downloadAsPost('#{filepath}/#{totalfile[i].filename}');") #{totalfile[i].filename}
-									td= totalfile[i].size
-									td= totalfile[i].birthtime
-									td										
-										-if(uclass=="1")
-											button.btn.btn-primary(type='button' onclick="createMOandDD('#{totalfile[i].filename}','#{totalfile[i].birthtime}')") MO,DD 생성
-											button.btn.btn-danger(type='button' onclick="deleteProc('#{totalfile[i].filename}')") 삭제										
+								-for(var i in totalfile)
+									tr
+										-if(totalfile[i].filetype=='directory')
+											td
+												a(href="javascript:alert('폴더 이동은 제한되어 있습니다.')")
+													span.glyphicon.glyphicon-folder-open &nbsp;#{totalfile[i].filename}											
+										-else
+											td 
+												a(href="javascript:downloadAsPost('#{filepath}/#{totalfile[i].filename}');") #{totalfile[i].filename}
+											td= totalfile[i].size
+											td= totalfile[i].birthtime
+											td															
+												-if(uclass=="1")
+													-if(!(totalfile[i].filename.split(".")[1]=="xml"))
+														button.btn.btn-primary(type='button' onclick="createMOandDD('#{totalfile[i].filename}','#{totalfile[i].birthtime}')") MO,DD 생성													
+													button.btn.btn-danger(type='button' onclick="deleteProc('#{totalfile[i].filename}')") 삭제												
