@@ -1,0 +1,56 @@
+extends layout2
+
+block content
+	include header	
+	.container-fluid
+		.row
+			include menu			
+			.col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+				.well
+					table.table
+						thead
+							tr
+								th E-mail
+								th Name
+								th Authority
+								th Join Date
+								th(style='width: 36px;')
+						tbody
+						-if(rowData.length > 0 )
+							-for(var i in rowData)
+								tr
+									td #{rowData[i].email}
+									td #{rowData[i].name}
+									td
+										-if(rowData[i].class == 1)
+											span(style="color:blue;") 관리자
+										-else
+											span 사용자
+										a.btn.btn-primary(href='#' style='display:inline;' , onclick="authorityUpdate('#{rowData[i].email}','#{currentPage}','#{rowData[i].class}')")
+											i.icon-edit.icon-white
+											span
+												strong 권한변경
+									td #{rowData[i].joindate}
+									td										
+										a.btn.btn-primary(href='#' style='display:inline;' onclick="deleteUser('#{rowData[i].email}','#{currentPage}')")
+											i.icon-trash.icon-white
+											span
+												strong 삭제
+						-else
+							tr
+								td(colspan="4") 데이터가 없습니다.
+					div(align="center")
+						ul.pagination
+							-if(startPage != 1)
+								li
+									a(href='/admin?page=#{startPage-1}') Prev							
+							-for(var i=startPage; i <= endPage; i++)
+								-if(currentPage == i)
+									li.active
+										a(href="/admin?page=#{i}")= i
+								-else
+									li
+										a(href="/admin?page=#{i}")= i
+							-if(totalPage != endPage)
+								li
+									a(href='/admin?page=#{endPage+1}') Next

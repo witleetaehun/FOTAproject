@@ -1,0 +1,76 @@
+extends layout
+
+block content
+	script.
+		function email_check() {							
+			var email = document.getElementsByName("email")[0].value;
+			var pass = document.getElementsByName("password")[0].value;
+			var _confirm = document.getElementsByName("confirm")[0].value;
+			var check = true;
+			var regex=/([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;			
+			if(email == '' || email == 'undefined'){
+				check = false;
+				alert("Please enter email");
+			}
+			else {
+				if(!regex.test(email)){
+					check = false;
+					alert("This is not an email format.");
+				}
+			}
+			if(pass != _confirm){
+				check = false;				
+				alert("패스워드 재입력 값이 일치하지 않습니다.")
+			}
+			
+			if($("#email").attr("check")=="false"){
+				check = false;
+				alert("Email 중복체크 필수");				
+			}
+			
+			return check;
+			
+				
+			
+		}		
+	.container
+		.row.main
+			.panel-heading
+				.panel-title.text-center
+					h1.title FOTA USER REGISTER
+					hr
+			.main-login.main-center
+				form.form-horizontal(method='post', action='/joinproc' , onsubmit="return email_check()")
+					.form-group
+						label.cols-sm-2.control-label(for='name') Your Name
+						.cols-sm-10
+							.input-group
+								span.input-group-addon
+									i.fa.fa-user.fa(aria-hidden='true')
+								input#name.form-control(type='text', name='name', placeholder='Enter your Name')
+					.form-group
+						label.cols-sm-2.control-label(for='email') Your Email
+						.cols-sm-10
+							.input-group
+								span.input-group-addon
+									i.fa.fa-envelope.fa(aria-hidden='true')
+								input#email.form-control(type='text', name='email' , placeholder='Enter your Email' , style="width:70%;" , check="false")
+								button.btn(type="button" onclick="overLapCheck(this)" check="false") check for overlapping
+					.form-group
+						label.cols-sm-2.control-label(for='password') Password
+						.cols-sm-10
+							.input-group
+								span.input-group-addon
+									i.fa.fa-lock.fa-lg(aria-hidden='true')
+								input#password.form-control(type='password', name='password', placeholder='Enter your Password')
+					.form-group
+						label.cols-sm-2.control-label(for='confirm') Confirm Password
+						.cols-sm-10
+							.input-group
+								span.input-group-addon
+									i.fa.fa-lock.fa-lg(aria-hidden='true')
+								input#confirm.form-control(type='password', name='confirm', placeholder='Confirm your Password')
+					.form-group
+						button.btn.btn-primary.btn-lg.btn-block.login-button(type='submit') Register
+					.login-register
+						a(href='/') Login

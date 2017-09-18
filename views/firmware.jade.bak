@@ -1,0 +1,82 @@
+extends layout2
+
+block content
+	include header
+	.container-fluid
+		.row
+			include menu			
+			.col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+				h1.page-header Dashboard
+				.row.placeholders
+					.col-xs-6.col-sm-3.placeholder
+						img.img-responsive(data-src='holder.js/200x200/auto/sky', alt='200x200', src='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzBEOEZEQiIvPjxnPjx0ZXh0IHg9Ijc0LjA1NDY4NzUiIHk9IjEwMCIgc3R5bGU9ImZpbGw6I0ZGRkZGRjtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0O2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjIwMHgyMDA8L3RleHQ+PC9nPjwvc3ZnPg==', data-holder-rendered='true')
+						h4 Label
+						span.text-muted Something else
+					.col-xs-6.col-sm-3.placeholder
+						img.img-responsive(data-src='holder.js/200x200/auto/vine', alt='200x200', src='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzM5REJBQyIvPjxnPjx0ZXh0IHg9Ijc0LjA1NDY4NzUiIHk9IjEwMCIgc3R5bGU9ImZpbGw6IzFFMjkyQztmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0O2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjIwMHgyMDA8L3RleHQ+PC9nPjwvc3ZnPg==', data-holder-rendered='true')
+						h4 Label
+						span.text-muted Something else
+					.col-xs-6.col-sm-3.placeholder
+						img.img-responsive(data-src='holder.js/200x200/auto/sky', alt='200x200', src='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzBEOEZEQiIvPjxnPjx0ZXh0IHg9Ijc0LjA1NDY4NzUiIHk9IjEwMCIgc3R5bGU9ImZpbGw6I0ZGRkZGRjtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0O2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjIwMHgyMDA8L3RleHQ+PC9nPjwvc3ZnPg==', data-holder-rendered='true')
+						h4 Label
+						span.text-muted Something else
+					.col-xs-6.col-sm-3.placeholder
+						img.img-responsive(data-src='holder.js/200x200/auto/vine', alt='200x200', src='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzM5REJBQyIvPjxnPjx0ZXh0IHg9Ijc0LjA1NDY4NzUiIHk9IjEwMCIgc3R5bGU9ImZpbGw6IzFFMjkyQztmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0O2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjIwMHgyMDA8L3RleHQ+PC9nPjwvc3ZnPg==', data-holder-rendered='true')
+						h4 Label
+						span.text-muted Something else
+				h2.sub-header Section title
+				div
+					-if(uclass=="1")
+						button.btn.btn-default(data-target='#layerpop', data-toggle='modal') File upload
+					-else
+					
+					br
+					#layerpop.modal.fade
+						.modal-dialog
+							.modal-content
+								// header
+								.modal-header
+									// 닫기(x) 버튼
+									button.close(type='button', data-dismiss='modal') ×
+									// header title
+									h4.modal-title 파일 업로드
+								// body
+								.modal-body
+									form(method='POST', action='upload' , enctype="multipart/form-data")
+										input(type="file",name='upfile')
+										p(style="text-align:center;") 파일 업로드는 지정된 경로에만 가능합니다.
+										button(type='submit' ,style="float:right; margin-bottom:10px;") File Upload
+								div(style="clear:both;")
+				.table-responsive(style="clear:both;")
+					table.table.table-striped
+						thead
+							tr
+								th Filename
+								th Size
+								th Date
+								th
+						tbody
+							form(method='POST', action='/download/fileDown' , name='downloadForm')
+								input(type='hidden',name='path' , id='fileValue')
+							-if(totalfile.length==0)
+								tr
+									td(colspan="4")
+										a(href="/firmware")
+											span.glyphicon.glyphicon-folder-open &nbsp;	
+							-else
+								-for(var i in totalfile)
+									tr
+										-if(totalfile[i].filetype=='directory')
+											td
+												a(href="javascript:alert('폴더 이동은 제한되어 있습니다.')")
+													span.glyphicon.glyphicon-folder-open &nbsp;#{totalfile[i].filename}											
+										-else
+											td 
+												a(href="javascript:downloadAsPost('#{filepath}/#{totalfile[i].filename}');") #{totalfile[i].filename}
+											td= totalfile[i].size
+											td= totalfile[i].birthtime
+											td															
+												-if(uclass=="1")
+													-if(!(totalfile[i].filename.split(".")[1]=="xml" || totalfile[i].filename.split(".")[1]=="json"))
+														button.btn.btn-primary(type='button' onclick="createMOandDD('#{totalfile[i].filename}','#{totalfile[i].birthtime}')") MO,DD 생성													
+													button.btn.btn-danger(type='button' onclick="deleteProc('#{totalfile[i].filename}')") 삭제												

@@ -10,8 +10,9 @@ header#header
 				a.navbar-brand(href='#') FOTA
 			#navbar.navbar-collapse.collapse
 				ul.nav.navbar-nav.navbar-right
-					//li
-						a(href='#') Admin
+					-if(uclass=="1")
+						li
+							a(href='/admin') Admin
 					li
 						a(href='#') Settings
 					//li
