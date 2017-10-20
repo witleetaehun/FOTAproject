@@ -9,7 +9,7 @@ $(function(){
   });
 
 	link = document.location.href;
-	console.log(link);
+	//console.log(link);
 	var linkarray = link.split("http://")[1];
 	$("ul.nav-sidebar > li > a").parent().removeClass("active");
 	$("ul.nav-sidebar > li > a").each(function(index) {
