@@ -5,6 +5,7 @@ block content
 	script.
 		//console.log("testssss");
 		$(function(){
+			/*
 			// socket.io 서버에 접속한다
 			var socket = io("");
 
@@ -43,6 +44,7 @@ block content
 			}
 			return name;
 			}
+			*/
 		});
 
 	include header
@@ -50,4 +52,10 @@ block content
 		.row
 			include menu
 			.col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
-				div#answer
+				.row.placeholders					
+				h2.sub-header 디바이스 상태
+				div
+					-for(var i in totalfile)
+						div
+							p= totalfile[i].gateway.g_id
+							p= totalfile[i].gateway.p_name

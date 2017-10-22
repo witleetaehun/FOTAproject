@@ -34,8 +34,11 @@ exports.device_monitor = function(req, res){
      var promfunction2 = function(param){
         return new Promise(function(resolved,rejected){        
             
-            param.forEach(function(file , index) {		                                         
-                to[index] = filePath + file;
+            param.forEach(function(file , index) {		    
+                var regexp = /[a-zA-Z0-9]+[\_]+device[\_]+information[\.]+json/;
+                //console.log(file + " : " + regexp.test(file));
+                if(regexp.test(file))
+                    to[index] = filePath + file;
             });
             resolved(to);
         });    
@@ -46,17 +49,27 @@ exports.device_monitor = function(req, res){
         return new Promise(function(resolved,rejected){        
             //console.log(param)
             for(t in param){                                
-                    totalfile.push(fs.readFileSync(param[t], 'utf8'));                   
+                    totalfile.push(JSON.parse(fs.readFileSync(param[t], 'utf8')));                   
             }
             resolved(totalfile);
         });    
      }
 
-    
+     var promfunction4 = function(param){
+        return new Promise(function(resolved,rejected){        
+            console.log(param.length);
+            res.render('device_monitor', {
+                filepath: filePathre,
+                totalfile: param, //param is totalfile
+                uclass: req.session.uclass
+            });       
+        });    
+     }
+
     promfunction1(true)
     .then(promfunction2)
     .then(promfunction3)
-    .then(console.log);
+    .then(promfunction4);
    
 
 
@@ -97,7 +110,7 @@ exports.device_monitor = function(req, res){
         }
         console.log(ipAddress);  */
     
-    res.render('device_monitor');
+    //res.render('device_monitor');
 	  
   }
   else{

@@ -2,7 +2,7 @@ var fs = require('fs');
 var path = require('path');
 var filePath = path.join( __dirname, '../download' );
 var filePathre = filePath.replace(/\\/gi,"/");
-var remotedirPath = "/Developer/FOTA_nodeE/FOTA_nodeE/download";
+//var remotedirPath = "/Developer/FOTA_nodeE/FOTA_nodeE/download";
 function bytesToSize(bytes) {
 	   var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
 	   if (bytes == 0) return '0 Byte';

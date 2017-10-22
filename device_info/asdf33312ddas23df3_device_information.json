@@ -1,0 +1,47 @@
+{
+    "gateway" : {
+    "g_id" : 3,
+    "p_name" : "게이트웨이",
+    "p_code" : 267,
+    "m_name" : "IOC-Q",
+    "k_version" : "3.14.7",
+    "b_number" : "0000001",
+    "memory" : "8GB",
+    "ram" : "2GB",
+    "cpu" : "NXP i.MX6Q ARM Cortex-A9 Quad Processor 1.2GHz",
+    "f_version" : "01.01.01.02",
+    "f_date" : " 2017-07-10 12:42:12",
+    "u_state" : 1
+    },
+    "nodes" : [
+      {
+      "n_id" : 255,
+      "p_name" : "온도 센서",
+      "m_name" : "LIT-THC",
+      "p_code" : 257,
+      "b_number" : "0000001",
+      "ram" : "48KB",
+      "cpu" : "ST ARM 32bit Cortex-M3 STM32F103 Processor"
+      ,
+      "nand" : "256KB",
+      "f_version" : "01.01.02.01",
+      "f_date" : " 2017-07-10 12:42:12",
+      "u_state" : 0,
+      "c_state" : 1
+      },
+      {
+      "n_id" : 256,
+      "p_name" : "온도 센서",
+      "m_name" : "LIT-THC",
+      "p_code" : 257,
+      "b_number" : "0000001",
+      "ram" : "48KB",
+      "cpu" : "ST ARM 32bit Cortex-M3 STM32F103 Processor",
+      "nand" : "256KB",
+      "f_version" : "01.01.03.01",
+      "f_date" : " 2017-07-10 12:42:12",
+      "u_state" : 2,
+      "c_state" : 1
+      }
+    ]
+    }

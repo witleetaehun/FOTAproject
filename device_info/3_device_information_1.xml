@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+  <gateway>
+    <g_id>1</g_id>
+    <p_name>게이트웨이</p_name>
+    <p_code>257</p_code>
+    <m_name>IOC-Q</m_name>
+    <k_version>3.14.7</k_version>
+    <b_number>0000001</b_number>
+    <memory>8GB</memory>
+    <ram>2GB</ram>
+    <cpu>NXP i.MX6Q ARM Cortex-A9 Quad Processor 1.2GHz</cpu>
+    <f_version>01.01.01.02</f_version>
+    <f_date> 2017-07-10 12:42:12</f_date>
+    <u_state>1</u_state>
+  </gateway>
+  <nodes>
+    <n_id>255</n_id>
+    <p_name>온도 센서</p_name>
+    <m_name>LIT-THC</m_name>
+    <p_code>257</p_code>
+    <b_number>0000001</b_number>
+    <ram>48KB</ram>
+    <cpu>ST ARM 32bit Cortex-M3 STM32F103 Processor</cpu>
+    <nand>256KB</nand>
+    <f_version>01.01.02.01</f_version>
+    <f_date> 2017-07-10 12:42:12</f_date>
+    <u_state>0</u_state>
+    <c_state>1</c_state>
+  </nodes>
+  <nodes>
+    <n_id>256</n_id>
+    <p_name>온도 센서</p_name>
+    <m_name>LIT-THC</m_name>
+    <p_code>257</p_code>
+    <b_number>0000001</b_number>
+    <ram>48KB</ram>
+    <cpu>ST ARM 32bit Cortex-M3 STM32F103 Processor</cpu>
+    <nand>256KB</nand>
+    <f_version>01.01.03.01</f_version>
+    <f_date> 2017-07-10 12:42:12</f_date>
+    <u_state>2</u_state>
+    <c_state>1</c_state>
+  </nodes>
+</root>
