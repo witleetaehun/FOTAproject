@@ -1,28 +1,83 @@
+var fs = require('fs');
+var path = require('path');
+var localDirectoryName = "device_info";
+var filePath = path.join( __dirname, '../'+localDirectoryName+'/' );
+var filePathre = filePath.replace(/\\/gi,"/");
 
-/*
- * GET users listing.
- */
 var getIP = require('ipware')().get_ip;
 exports.device_monitor = function(req, res){
   if(req.session.user){
-    //console.log(req.session.user)
-    // var ipInfo = getIP(req);
-    // console.log("ipInfo : " + ipInfo);
-    // for(key in ipInfo){
-    //   console.log(key + " : " + ipInfo[key]);
-    // }
-    // // { clientIp: '127.0.0.1', clientIpRoutable: false }
-    // var ipAddr = req.headers['x-forwarded-for'] || 
-    // req.connection.remoteAddress || 
-    // req.socket.remoteAddress ||
-    // req.connection.socket.remoteAddress;
-    // console.log("headers : " + req.headers["x-forwarded-for"]);
+
+    var to = new Array();    
+    var totalfile = new Array();
+
+    var promfunction1 = function(){
+        return new Promise(function(resolved,rejected){        
+            fs.readdir(filePath, function (err, files) {                    
+                    /* if(!files.length){
+                        res.render('firmware', {
+                            filepath: filePathre,
+                            totalfile: totalfile,
+                            uclass: req.session.uclass
+                    });
+                    } */
+                    if(err){
+                        console.log("device_info read file error!!!!");
+                        rejected(Error(err));
+                    }
+                    else{       
+                        resolved(files);                     
+                    }            
+            });
+        });
+    }
+     var promfunction2 = function(param){
+        return new Promise(function(resolved,rejected){        
+            
+            param.forEach(function(file , index) {		                                         
+                to[index] = filePath + file;
+            });
+            resolved(to);
+        });    
+                        
+     }
+
+     var promfunction3 = function(param){
+        return new Promise(function(resolved,rejected){        
+            //console.log(param)
+            for(t in param){                                
+                    totalfile.push(fs.readFileSync(param[t], 'utf8'));                   
+            }
+            resolved(totalfile);
+        });    
+     }
+
     
-    // console.log("ipAddr : " + ipAddr);
-    // console.log("aaa : " + req.connection.remoteAddress);
-    // console.log(req.connection.remotePort);
-    // console.log(req.connection.localAddress);
-    // console.log(req.connection.localPort);
+    promfunction1(true)
+    .then(promfunction2)
+    .then(promfunction3)
+    .then(console.log);
+   
+
+
+   /*  console.log(req.session.user)
+    var ipInfo = getIP(req);
+    console.log("ipInfo : " + ipInfo);
+    for(key in ipInfo){
+      console.log(key + " : " + ipInfo[key]);
+    }
+    // { clientIp: '127.0.0.1', clientIpRoutable: false }
+    var ipAddr = req.headers['x-forwarded-for'] || 
+    req.connection.remoteAddress || 
+    req.socket.remoteAddress ||
+    req.connection.socket.remoteAddress;
+    console.log("headers : " + req.headers["x-forwarded-for"]);
+    
+    console.log("ipAddr : " + ipAddr);
+    console.log("aaa : " + req.connection.remoteAddress);
+    console.log(req.connection.remotePort);
+    console.log(req.connection.localAddress);
+    console.log(req.connection.localPort);
     var ipAddress;
     
         if(!!req.hasOwnProperty('sessionID')){
@@ -40,7 +95,7 @@ exports.device_monitor = function(req, res){
                 }
             }
         }
-        console.log(ipAddress);
+        console.log(ipAddress);  */
     
     res.render('device_monitor');
 	  

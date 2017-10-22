@@ -1,8 +1,3 @@
-
-/*
- * GET users listing.
- */
-
 var fs = require('fs');
 var path = require('path');
 var filePath = path.join( __dirname, '../download' );
