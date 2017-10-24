@@ -5,9 +5,30 @@ $(function(){
 	});
 
 	$("#upfile").change(function() {
-        alert('changed!');
-  });
+        $.ajax({
+			url : "/firmwareUploadCheck",
+			type : "get",			
+			dataType : "json",
+			success : function(data){
+				console.log(data);
+			},
+			statusCode : {
+				404 : function() {
+					alert("No data.");
+				},
+				500 : function() {
+					alert("Server or grammatical error.");
+				}
+			}
+		});
+	  });
+	  $("input:radio[name='update_type']").prop("checked" , true);
+	$("input:radio[name='update_type']").change(function(){
+		alert($(this).val());
+	});
+	  
 
+	
 	link = document.location.href;
 	//console.log(link);
 	var linkarray = link.split("http://")[1];
@@ -38,30 +59,30 @@ function overLapCheck(obj){
 	}
 	if(check){
 		$.ajax({
-					url : "/overLapCheck",
-					type : "get",
-					data : {"email" : email},
-					dataType : "json",
-					success : function(data){
-						if(!data){
-							alert("중복되는 Email 입니다.");
-							$("#email").attr("check","false");
-						}
-						else{
-							alert("등록가능한 Email 입니다.");
-							$("#email").attr("check","true");
-						}
+			url : "/overLapCheck",
+			type : "get",
+			data : {"email" : email},
+			dataType : "json",
+			success : function(data){
+				if(!data){
+					alert("중복되는 Email 입니다.");
+					$("#email").attr("check","false");
+				}
+				else{
+					alert("등록가능한 Email 입니다.");
+					$("#email").attr("check","true");
+				}
 
-					},
-					statusCode : {
-						404 : function() {
-							alert("No data.");
-						},
-						500 : function() {
-							alert("Server or grammatical error.");
-						}
-					}
-				});
+			},
+			statusCode : {
+				404 : function() {
+					alert("No data.");
+				},
+				500 : function() {
+					alert("Server or grammatical error.");
+				}
+			}
+		});
 	}
 
 }

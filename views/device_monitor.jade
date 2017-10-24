@@ -1,6 +1,27 @@
 extends layout2
 
 block content
+	style.
+		.table-striped th , td{
+			text-align:center;
+		}
+		.table-striped td .u_state {
+			background: #dddddd;
+			width: 20px;
+			height: 20px;
+			display: inline-block;
+			border-radius: 20px;
+			vertical-align: bottom;
+		}
+		.table-striped td .u_success{
+			background: #54c56d;
+		}
+		.table-striped td .u_failed{
+			background: #d22d25;
+		}
+		.table-striped td .u_resnone{
+			background: #cab658;
+		}
 	script(src="/socket.io/socket.io.js")
 	script.
 		//console.log("testssss");
@@ -56,6 +77,61 @@ block content
 				h2.sub-header 디바이스 상태
 				div
 					-for(var i in totalfile)
-						div
-							p= totalfile[i].gateway.g_id
-							p= totalfile[i].gateway.p_name
+						div(style="border:1px solid black; display:inline-block; margin:5px;")
+							h5
+								| #{totalfile[i].gateway.p_name}(#{totalfile[i].gateway.g_id})
+							.table-responsive(style="clear:both;")
+							table.table.table-striped(border="1")
+								thead
+									tr
+									-for(var _i in totalfile[i].gateway)																								
+										case _i
+											when "p_code"
+												th 제품코드
+											when "m_name"
+												th 모델명
+											when "k_version"
+												th 커널 버전
+											when "b_number"
+												th 빌드 번호												
+											when "f_version"
+												th 펌웨어 버전
+											when "f_date"
+												th 커널 버전
+											when "u_state"
+												th 펌웨어 업데이트 상태
+											when "k_version"
+												th 커널 버전
+											when "g_id"
+												th(style="display:none") #{_i}
+											when "p_name"													
+												th(style="display:none") #{_i}
+											default
+												th #{_i}																					
+								tbody																
+									tr
+									-for(var _i in totalfile[i].gateway)
+										case _i											
+											when "g_id"												
+												td(style="display:none") #{totalfile[i].gateway[_i]}
+											when "p_name"					
+												td(style="display:none") #{totalfile[i].gateway[_i]}
+											when "u_state"
+												case totalfile[i].gateway[_i]
+													when 0
+														td 업데이트 성공
+															span.u_state.u_success
+													when 1
+														td 업데이트 실패
+															span.u_state.u_failed
+													when 2
+														td 업데이트 대기중
+															span.u_state.u_wait
+													when 3
+														td 응답 없음
+															span.u_state.u_resnone
+													default
+														td ?
+															span.u_state																				
+											default
+												td #{totalfile[i].gateway[_i]}

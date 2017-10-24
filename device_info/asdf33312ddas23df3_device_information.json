@@ -1,7 +1,7 @@
 {
     "gateway" : {
     "g_id" : 3,
-    "p_name" : "게이트웨이",
+    "p_name" : "ddd게이트웨이",
     "p_code" : 267,
     "m_name" : "IOC-Q",
     "k_version" : "3.14.7",

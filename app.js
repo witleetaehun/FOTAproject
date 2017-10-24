@@ -18,6 +18,7 @@ var express = require('express')
   , createMOandDD2 = require('./routes/createMOandDD2')
   , uparchiver = require('./routes/archiver')
   , deleteproc = require('./routes/deleteproc')
+  , firmwareUploadCheck = require("./routes/firmwareUploadCheck")
   , morgan = require('morgan')
   , methodOverride = require('method-override')
   , favicon = require('serve-favicon')
@@ -89,6 +90,7 @@ app.get('/device_monitor', device_monitor.device_monitor);
 app.get('/join', joinform.joinform);
 app.get('/admin', admin.admin);
 app.post('/joinproc', joinproc.joinproc);
+app.get('/firmwareUploadCheck', firmwareUploadCheck.firmwareUploadCheck);
 //app.post('/loginproc', loginproc.loginproc);
 
 

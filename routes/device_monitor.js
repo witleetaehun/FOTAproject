@@ -56,8 +56,7 @@ exports.device_monitor = function(req, res){
      }
 
      var promfunction4 = function(param){
-        return new Promise(function(resolved,rejected){        
-            console.log(param.length);
+        return new Promise(function(resolved,rejected){                    
             res.render('device_monitor', {
                 filepath: filePathre,
                 totalfile: param, //param is totalfile

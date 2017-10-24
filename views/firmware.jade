@@ -36,9 +36,9 @@ block content
 												tr
 													th 업데이트 타입
 													td
-														input(type="radio", name="update_type")
+														input(type="radio", name="update_type" value="일괄적")
 														| 일괄적
-														input(type="radio", name="update_type")
+														input(type="radio", name="update_type" value="개별적")
 														| 개별적
 												tr
 													th 업데이트 노드 타입
@@ -90,4 +90,4 @@ block content
 													-if(!(totalfile[i].filename.split(".")[1]=="xml" || totalfile[i].filename.split(".")[1]=="json"))
 														button.btn.btn-primary(type='button' onclick="createMOandDD('#{totalfile[i].filename}','#{totalfile[i].birthtime}')") MO,DD 생성(json)													
 														button.btn.btn-primary(type='button' onclick="createMOandDD2('#{totalfile[i].filename}','#{totalfile[i].birthtime}')") MO,DD 생성(xml)
-													button.btn.btn-danger(type='button' onclick="deleteProc('#{totalfile[i].filename}')") 삭제												
+													button.btn.btn-danger(type='button' onclick="deleteProc('#{totalfile[i].filename}')") 삭제
