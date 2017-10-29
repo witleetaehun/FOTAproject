@@ -3,28 +3,38 @@ $(function(){
 		$(".modal-dialog").css("top", (Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
                 $(window).scrollTop()))-250 + "px");
 	});
-
+	$('input:radio[name="update_type"][value="개별적"]').prop('checked', true);	
 	$("#upfile").change(function() {
-        $.ajax({
-			url : "/firmwareUploadCheck",
-			type : "get",			
-			dataType : "json",
-			success : function(data){
-				console.log(data);
-			},
-			statusCode : {
-				404 : function() {
-					alert("No data.");
-				},
-				500 : function() {
-					alert("Server or grammatical error.");
-				}
-			}
-		});
-	  });
-	  $("input:radio[name='update_type']").prop("checked" , true);
+        
+		console.log(fileCheckFn());
+	});	
+	
 	$("input:radio[name='update_type']").change(function(){
-		alert($(this).val());
+		var selfVal = $(this).val()
+		if($("#upfile").val() == "" || $("#upfile").val() == undefined){
+			$(this).prop('checked' , false);
+			$(this).siblings().prop('checked' , true);
+			alert("파일선택 안됨")
+		}
+		else{			
+			//var outHtml = "";
+			if(selfVal == "일괄적"){
+				/* $("#singly").empty();				
+				outHtml += "<select><option>노드타입 선택</option></select>"
+				$("#collective").append(outHtml);*/
+				$("#collective").show();
+				$("#singly").hide();
+			}
+			else if(selfVal == "개별적") {
+				/* $("#collective").empty();
+				outHtml += "<select><option>게이트웨이 선택</option></select><select><option>노드 선택</option></select>"
+				$("#singly").append(outHtml);*/
+				
+				$("#singly").show();				
+				$("#collective").hide();
+				
+			}
+		}
 	});
 	  
 
@@ -138,3 +148,28 @@ function createMOandDD2(file , time){
 		location.href="/createMOandDD2?filename="+file+"&time="+time;
 	//alert(file);
 }
+
+function fileCheckFn() {
+	var ajaxResultData;
+	$.ajax({
+		url : "/firmwareUploadCheck",
+		type : "get",
+		async : false ,		
+		dataType : "json",
+		success : function(data){
+			ajaxResultData = data;
+			console.log(ajaxResultData);
+		},
+		statusCode : {
+			404 : function() {
+				alert("No data.");
+			},
+			500 : function() {
+				alert("Server or grammatical error.");
+			}
+		}
+	});
+
+	return ajaxResultData;
+}
+
