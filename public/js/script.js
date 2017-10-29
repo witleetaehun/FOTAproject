@@ -5,8 +5,20 @@ $(function(){
 	});
 	$('input:radio[name="update_type"][value="개별적"]').prop('checked', true);	
 	$("#upfile").change(function() {
-        
-		console.log(fileCheckFn());
+		var resultData = fileCheckFn();
+		var outHtml = "";
+		
+		for(var i in resultData){
+			outHtml +="<option g_name='"+resultData[i].gateway.p_name+"'>"+resultData[i].gateway.m_name+"["+resultData[i].gateway.p_name+"]"+"</option>";
+			for(var j in resultData[i].nodes){
+				var _outHtml = "";
+				_outHtml += "<option style='display:none;' g_name='"+
+					resultData[i].gateway.p_name+"'>"+resultData[i].nodes[j].m_name+"["+resultData[i].nodes[j].p_name+"]"+"</option>";
+				$("#singly").children("select").eq(1).append(_outHtml);
+			}
+		}
+		$("#singly").children("select").eq(0).append(outHtml);
+		
 	});	
 	
 	$("input:radio[name='update_type']").change(function(){
@@ -37,7 +49,52 @@ $(function(){
 		}
 	});
 	  
+	$("#singly").children("select").eq(0).change(function(){
+		var _index = $(this).children("option").index($(this).children("option:selected")); 
+		
+		var selfVal = $(this).children("option:selected").attr("g_name");
+		if(_index != 0){
+			$("#singly").children("select").eq(1).children("option").each(function(i , v){			
+				//console.log(selfVal);
+				//console.log($(v).attr("g_name"));				
 
+				if(i > 0){
+					if($(v).attr("g_name") == selfVal){	
+						$(v).show();
+					}
+					else{
+						$(v).hide();
+					}
+				}
+				else{
+					$(v).prop("selected", true);
+				}
+			});
+		}		
+	});
+	$("#singly").children("select").eq(1).change(function(){
+		var index = $("#singly").children("select").eq(1).children("option").index($("#singly").children("select").eq(1).children("option:selected"));
+		var _index = $(this).children("option").index($(this).children("option:selected"));
+		var _selfVal = $("#singly").children("select").eq(0).children("option:selected").text();
+		var selfVal = $(this).children("option:selected").text();
+		var valueCheck = true;
+		if(_index != 0){
+			$("#node-list").children("select").children("option").each(function(i , v){
+				if($(v).text() == _selfVal+" "+selfVal)
+					valueCheck = false;
+				else
+					valueCheck = true;
+			});
+
+			if(valueCheck){
+				$("#node-list").children("select").append("<option>"+_selfVal+" "+selfVal+"</option>");
+			}
+			else{
+				alert("이미 목록에 있는 노드 입니다.")
+			}
+				
+		}
+	});
 	
 	link = document.location.href;
 	//console.log(link);

@@ -1,7 +1,18 @@
 extends layout2
 
-block content
-	include header
+block content	
+	link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css')
+	script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js')		
+	script(src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js')
+	script.
+		$(function(){
+			var ads = 1234;
+			console.log(ads);
+			$("#datetimepicker2").datetimepicker({
+				format: 'YYYY-MM-DD HH:mm'
+			});
+		});
+	include header	
 	.container-fluid
 		.row
 			include menu			
@@ -44,19 +55,29 @@ block content
 													th 업데이트 노드 타입
 													td
 														div#collective(style="display:none;")
-															select
-																option 노드타입 선택
+															select(style="width:100%;")
+																option 노드 타입 선택
+																option 온도센서
+																option 습도센서
+																option CO2센서
+																option 가속도센서
 														div#singly
-															select
+															select(style="width:70%;")
 																option 게이트웨이 선택
-															select
+															select(style="width:28%;")
 																option 노드 선택
 												tr
 													th 업데이트 노드 리스트
 													td
-														select(multiple="multiple")
-															option 노드 A
-															option 노드 B
+														div#node-list
+															select(multiple="multiple" style="width:100%;")
+												tr
+													th 업데이트 일시
+													td
+														div#datetimepicker2.input-group.date
+															input.form-control(type='text')
+															span.input-group-addon
+																span.glyphicon.glyphicon-calendar									
 								div(style="clear:both;")
 				.table-responsive(style="clear:both;")
 					table.table.table-striped
