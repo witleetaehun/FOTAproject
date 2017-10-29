@@ -6,8 +6,6 @@ block content
 	script(src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js')
 	script.
 		$(function(){
-			var ads = 1234;
-			console.log(ads);
 			$("#datetimepicker2").datetimepicker({
 				format: 'YYYY-MM-DD HH:mm'
 			});
@@ -57,10 +55,10 @@ block content
 														div#collective(style="display:none;")
 															select(style="width:100%;")
 																option 노드 타입 선택
-																option 온도센서
-																option 습도센서
-																option CO2센서
-																option 가속도센서
+																option(value="온도 센서") 온도 센서
+																option(value="습도 센서") 습도 센서
+																option(value="CO2 센서") CO2 센서
+																option(value="가속도 센서") 가속도 센서
 														div#singly
 															select(style="width:70%;")
 																option 게이트웨이 선택

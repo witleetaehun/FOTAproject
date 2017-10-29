@@ -12,8 +12,9 @@ $(function(){
 			outHtml +="<option g_name='"+resultData[i].gateway.p_name+"'>"+resultData[i].gateway.m_name+"["+resultData[i].gateway.p_name+"]"+"</option>";
 			for(var j in resultData[i].nodes){
 				var _outHtml = "";
-				_outHtml += "<option style='display:none;' g_name='"+
-					resultData[i].gateway.p_name+"'>"+resultData[i].nodes[j].m_name+"["+resultData[i].nodes[j].p_name+"]"+"</option>";
+				_outHtml += "<option style='display:none;' gm_name='"+resultData[i].gateway.m_name+"' g_name='"+
+					resultData[i].gateway.p_name+"' sensor_type='"+resultData[i].nodes[j].p_name+"'>"+resultData[i].nodes[j].m_name+
+					"["+resultData[i].nodes[j].p_name+"]"+"</option>";
 				$("#singly").children("select").eq(1).append(_outHtml);
 			}
 		}
@@ -29,6 +30,7 @@ $(function(){
 			alert("파일선택 안됨")
 		}
 		else{			
+			$("#node-list").children("select").empty();
 			//var outHtml = "";
 			if(selfVal == "일괄적"){
 				/* $("#singly").empty();				
@@ -72,6 +74,7 @@ $(function(){
 			});
 		}		
 	});
+
 	$("#singly").children("select").eq(1).change(function(){
 		var index = $("#singly").children("select").eq(1).children("option").index($("#singly").children("select").eq(1).children("option:selected"));
 		var _index = $(this).children("option").index($(this).children("option:selected"));
@@ -95,7 +98,27 @@ $(function(){
 				
 		}
 	});
+
+	$("#collective").children("select").change(function(){
+		var $self = $(this).children("option:selected");
+		var outHtml = "";
+		$("#singly").children("select").eq(1).children("option").each(function(i , v){
+			if($(v).attr("sensor_type") == $self.val()){
+				outHtml += "<option>"+$(v).attr("gm_name")+"["+$(v).attr("g_name")+"]"+" "+$(v).text()+"</option>";				
+			}
+		});
+		if(outHtml != "")
+			$("#node-list").children("select").append(outHtml);
+		else{			
+			$(this).children("option:eq(0)").prop("selected" , true);
+			alert("해당 센서타입의 노드가 존재하지 않습니다.");
+		}
+			
+	});
 	
+
+
+
 	link = document.location.href;
 	//console.log(link);
 	var linkarray = link.split("http://")[1];
