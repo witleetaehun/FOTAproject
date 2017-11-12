@@ -11,7 +11,8 @@
   "cpu" : "NXP i.MX6Q ARM Cortex-A9 Quad Processor 1.2GHz",
   "f_version" : "01.01.01.02",
   "f_date" : " 2017-07-10 12:42:12",
-  "u_state" : 1
+  "u_state" : 1 ,
+  "ip" : "192.168.0.3"
   },
   "nodes" : [
     {

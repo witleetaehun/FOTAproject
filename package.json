@@ -16,6 +16,7 @@
     "file-encrypt": "0.0.1",
     "file-encryptor": "^0.1.1",
     "ftp": "^0.3.10",
+    "ftp-client": "^0.2.2",
     "ipware": "^1.0.0",
     "jade": "^1.11.0",
     "jsftp": "^2.0.0",

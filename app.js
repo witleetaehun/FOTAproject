@@ -48,7 +48,8 @@ var _storage = multer.diskStorage({
     }
 });
 var upload = multer({storage:_storage}).single('upfile');
-
+var Client = require('ftp');
+var exec = require("child_process").exec;
 var app = express();
 
 app.locals.pretty = true;
@@ -181,9 +182,10 @@ app.post('/download/:file',function(req, res){
 	res.download(down);
 });
 
+  
 app.post('/upload' , function(req, res){
   
-  console.log("aasdf : " + req.body['update_node_list[]']);
+  //console.log(req.body.update_time);
 	//console.log("asdfasdfa : "+req.body.upfile);
 	upload(req, res, function (err) {
 	    if (err) {
@@ -192,9 +194,46 @@ app.post('/upload' , function(req, res){
 	    	return
 	    }
 	    else{
+      var extSplit = req.file.filename.split(".");
+      var fName = "";
+      for(var e = 0; e < extSplit.length; e++){
+        if( !( e == (extSplit.length-1) ) ){
+          fName += extSplit[e];
+        }        
+      }
+      var __filePath = path.join( __dirname, './download' );
+      var uploadFInfo = new Object();
+      uploadFInfo.file = req.file.filename;
+      uploadFInfo.updateType = (req.body.update_type=="개별적")?1:2
+      if(req.body.update_type=="일괄적"){        
+        if ( req.body.update_node_type.indexOf('IOC-Q') != -1)   
+          uploadFInfo.updateNodeType = 1;
+        else if( req.body.update_node_type.indexOf('온도') != -1)
+          uploadFInfo.updateNodeType = 2;
+        else if( req.body.update_node_type.indexOf('습도') != -1)
+          uploadFInfo.updateNodeType = 3;
+        else if( req.body.update_node_type.indexOf('CO2') != -1)
+          uploadFInfo.updateNodeType = 4
+        else if( req.body.update_node_type.indexOf('가속도') != -1)
+          uploadFInfo.updateNodeType = 5
+      }
+      var updateNodeList = req.body.update_node_list;
+      uploadFInfo.updateNodeList = updateNodeList;
+      uploadFInfo.updateDate = req.body.update_time
+      var jsonInfo = JSON.stringify(uploadFInfo, null, "\t");
+      fs.writeFileSync(__filePath+'/'+fName+'.json',jsonInfo,'utf-8');
+
+      exec("ls", function (err, stdout, stderr) {
+        console.log('stdout: ' + stdout);
+        console.log('stderr: ' + stderr);
+        if (error !== null) {
+            console.log('error: ' + err);
+        }
+      });
+      
+
 
 			res.send("<script>alert('업로드 되었습니다.');location.href='/firmware';</script>");
-	    	//console.log(req.body);
 	    }
 	  })
 });

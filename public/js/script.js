@@ -9,11 +9,11 @@ $(function(){
 		var outHtml = "";
 		
 		for(var i in resultData){
-			outHtml +="<option g_name='"+resultData[i].gateway.p_name+"'>"+resultData[i].gateway.m_name+"["+resultData[i].gateway.p_name+"]"+"</option>";
+			outHtml +="<option g_name='"+resultData[i].gateway.p_name+"' g_address='"+resultData[i].gateway.ip+"'>"+resultData[i].gateway.m_name+"["+resultData[i].gateway.p_name+"]"+"</option>";
 			for(var j in resultData[i].nodes){
 				var _outHtml = "";
 				_outHtml += "<option style='display:none;' gm_name='"+resultData[i].gateway.m_name+"' g_name='"+
-					resultData[i].gateway.p_name+"' sensor_type='"+resultData[i].nodes[j].p_name+"'>"+resultData[i].nodes[j].m_name+
+					resultData[i].gateway.p_name+"' g_address='"+resultData[i].gateway.ip+"' sensor_type='"+resultData[i].nodes[j].p_name+"'>"+resultData[i].nodes[j].m_name+
 					"["+resultData[i].nodes[j].p_name+"]"+"</option>";
 				$("#singly").children("select").eq(1).append(_outHtml);
 			}
@@ -24,6 +24,7 @@ $(function(){
 	
 	$("input:radio[name='update_type']").change(function(){
 		var selfVal = $(this).val()
+		$("#g_address").val("");
 		if($("#upfile").val() == "" || $("#upfile").val() == undefined){
 			$(this).prop('checked' , false);
 			$(this).siblings().prop('checked' , true);
@@ -80,6 +81,7 @@ $(function(){
 		var _index = $(this).children("option").index($(this).children("option:selected"));
 		var _selfVal = $("#singly").children("select").eq(0).children("option:selected").text();
 		var selfVal = $(this).children("option:selected").text();
+		var g_address = $("#singly").children("select").eq(0).children("option:selected").attr("g_address");
 		var valueCheck = true;
 		if(_index != 0){
 			$("#node-list").children("select").children("option").each(function(i , v){
@@ -90,7 +92,20 @@ $(function(){
 			});
 
 			if(valueCheck){
-				$("#node-list").children("select").append("<option>"+_selfVal+" "+selfVal+"</option>");
+				$("#node-list").children("select").append("<option selected>"+_selfVal+" "+selfVal+"</option>");
+				if($("#g_address").val() == "")
+					$("#g_address").val(g_address);
+				else
+					$("#g_address").val($("#g_address").val()+","+g_address);
+					
+				if($("#g_address").val().indexOf(",") != -1){
+					var g_addressArray = $("#g_address").val().split(",");
+					g_addressArray = g_addressArray.reduce(function(a,b){
+						if (a.indexOf(b) < 0 ) a.push(b);
+						return a;
+						},[]);
+						$("#g_address").val(g_addressArray);
+				}
 			}
 			else{
 				alert("이미 목록에 있는 노드 입니다.")
@@ -104,12 +119,28 @@ $(function(){
 		var outHtml = "";
 		$("#singly").children("select").eq(1).children("option").each(function(i , v){
 			if($(v).attr("sensor_type") == $self.val()){
-				outHtml += "<option>"+$(v).attr("gm_name")+"["+$(v).attr("g_name")+"]"+" "+$(v).text()+"</option>";				
+				var g_address = $(v).attr("g_address");
+				if($("#g_address").val() == ""){
+					$("#g_address").val(g_address)
+				}
+				else{
+					$("#g_address").val($("#g_address").val()+","+g_address)
+				}
+				
+				outHtml += "<option selcted>"+$(v).attr("gm_name")+"["+$(v).attr("g_name")+"]"+" "+$(v).text()+"</option>";				
 			}
 		});
-		if(outHtml != "")
-			$("#node-list").children("select").append(outHtml);
-			$("#node-list").children("select > option").prop("selected" , true);
+		if($("#g_address").val().indexOf(",") != -1){
+			var g_addressArray = $("#g_address").val().split(",");
+			g_addressArray = g_addressArray.reduce(function(a,b){
+				if (a.indexOf(b) < 0 ) a.push(b);
+				return a;
+			  },[]);
+			  $("#g_address").val(g_addressArray);
+		}
+		if(outHtml != ""){
+			$("#node-list").children("select").append(outHtml);			
+		}
 		else{			
 			$(this).children("option:eq(0)").prop("selected" , true);
 			alert("해당 센서타입의 노드가 존재하지 않습니다.");
