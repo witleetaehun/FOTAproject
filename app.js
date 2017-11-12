@@ -242,6 +242,16 @@ app.post('/upload' , function(req, res){
         });
       }
 
+      var sql = "insert into device_record values (null , ? , ? , ? , ? , ?)";      
+      var params = [req.body.update_node_list , 'success' , 0 , req.file.filename , 0];
+      connection.query(sql,params, function(err, result) {
+        if(err)
+         throw err;
+        else {
+          console.log(result);          
+        }
+      });
+
       
 
 			res.send("<script>alert('업로드 되었습니다.');location.href='/firmware';</script>");

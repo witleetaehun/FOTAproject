@@ -1,12 +1,71 @@
 extends layout2
 
 block content
+	style.
+		.table-striped th , td{
+			text-align:center;
+		}
+		.table-striped td .u_state {
+			background: #dddddd;
+			width: 20px;
+			height: 20px;
+			display: inline-block;
+			border-radius: 20px;
+			vertical-align: bottom;
+		}
+		.table-striped td .u_success{
+			background: #54c56d;
+		}
+		.table-striped td .u_failed{
+			background: #d22d25;
+		}
+		.table-striped td .u_resnone{
+			background: #cab658;
+		}
+	script(src="/socket.io/socket.io.js")
+	script.
+		
+		$(function(){
+			
+		});
+
 	include header
 	.container-fluid
 		.row
-			include menu			
+			include menu
 			.col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
-				form(method='POST', action='/download/aaaa')
-					p
-						button(type="submit", name="path" value=filepath+'/20170728_131958.jpg') 다운로드
-					p= totalFile[0].name
+				.row.placeholders					
+				h2.sub-header 디바이스 이력
+				div
+					table.table.table-bordered
+						thead
+							tr
+								th(style="text-align:center;") 게이트웨이,노드 정보								
+								th(style="text-align:center;") 펌웨어 업로드 결과
+								th(style="text-align:center;") 펌웨어 파일명					
+						tbody
+							-if(rowData.length > 0 )
+								-for(var i in rowData)
+									tr
+										td #{rowData[i].gateway_info}
+										td #{rowData[i].firmware_result}
+										td #{rowData[i].firmware_filename}
+							-else
+								tr
+									td(colspan="3") 데이터가 없습니다.					
+					div(align="center")
+						ul.pagination
+							-if(startPage != 1)
+								li
+									a(href='/device_record?page=#{startPage-1}') Prev							
+							-for(var i=startPage; i <= endPage; i++)
+								-if(currentPage == i)
+									li.active
+										a(href="/device_record?page=#{i}")= i
+								-else
+									li
+										a(href="/device_record?page=#{i}")= i
+							-if(totalPage != endPage)
+								li
+									a(href='/device_record?page=#{endPage+1}') Next
+					
