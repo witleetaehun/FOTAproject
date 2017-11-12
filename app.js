@@ -182,6 +182,8 @@ app.post('/download/:file',function(req, res){
 });
 
 app.post('/upload' , function(req, res){
+  
+  console.log("aasdf : " + req.body['update_node_list[]']);
 	//console.log("asdfasdfa : "+req.body.upfile);
 	upload(req, res, function (err) {
 	    if (err) {

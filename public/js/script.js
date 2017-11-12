@@ -109,6 +109,7 @@ $(function(){
 		});
 		if(outHtml != "")
 			$("#node-list").children("select").append(outHtml);
+			$("#node-list").children("select > option").prop("selected" , true);
 		else{			
 			$(this).children("option:eq(0)").prop("selected" , true);
 			alert("해당 센서타입의 노드가 존재하지 않습니다.");
@@ -251,5 +252,45 @@ function fileCheckFn() {
 	});
 
 	return ajaxResultData;
+}
+
+function upFormCheck() {
+	var updateList = $("#node-list > select > option").length;
+	var updateTime = $("#datetimepicker2 > input[name=update_time]").val();	
+	var _upfile = $("#upfile").val();
+	var allcheck = true;
+
+	
+
+	if(_upfile == "" || _upfile == undefined){
+		allcheck = false;
+		alert("파일선택 안됨");
+	}
+	else{
+
+	}
+	
+	if(updateList > 0){ //업데이트 노드 리스트 존재할때
+		$("#node-list > select > option").prop("selected" , true);
+	}
+	else{ //업데이트 노드 리스트 존재하지않을때
+		allcheck = false;
+		alert("업데이트 노드 리스트가 비어있습니다.");
+	}
+	
+	if(updateTime !== ""){ //업데이트 일시 존재할때		
+		var dateCheck = (new Date(updateTime).getTime()) - new Date().getTime() > 300000;
+		if(!dateCheck){
+			alert("업데이트 일시가 현재시간 5분 이상이어야 합니다.");
+			allcheck = false;
+		}
+	}
+	else{ //업데이트 일시 존재하지않을때
+		allcheck = false;
+		alert("업데이트 일시를 지정해주세요.");
+	}
+
+
+	return allcheck;
 }
 

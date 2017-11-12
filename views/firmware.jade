@@ -6,9 +6,13 @@ block content
 	script(src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js')
 	script.
 		$(function(){
+			var dateNow = new Date();
 			$("#datetimepicker2").datetimepicker({
+				defaultDate:moment(dateNow),				
 				format: 'YYYY-MM-DD HH:mm'
 			});
+
+			$("input[name=update_time]").val("");
 		});
 	include header	
 	.container-fluid
@@ -34,7 +38,7 @@ block content
 									h4.modal-title 파일 업로드
 								// body
 								.modal-body
-									form(method='POST', action='upload' , enctype="multipart/form-data")										
+								form(method='POST', action='upload' , enctype="multipart/form-data" onsubmit="return upFormCheck()")										
 									h5.text-center 파일 업로드는 지정된 경로에만 가능합니다.
 										table#tblGrid.table.table-striped
 											tbody(align="left")
@@ -53,29 +57,32 @@ block content
 													th 업데이트 노드 타입
 													td
 														div#collective(style="display:none;")
-															select(style="width:100%;")
+															select(style="width:100%;" name="update_node_type")
 																option 노드 타입 선택
 																option(value="온도 센서") 온도 센서
 																option(value="습도 센서") 습도 센서
 																option(value="CO2 센서") CO2 센서
 																option(value="가속도 센서") 가속도 센서
 														div#singly
-															select(style="width:70%;")
+															select(style="width:70%;" name="gateway_sel")
 																option 게이트웨이 선택
-															select(style="width:28%;")
+															select(style="width:28%;" name="node_sel")
 																option 노드 선택
 												tr
 													th 업데이트 노드 리스트
 													td
 														div#node-list
-															select(multiple="multiple" style="width:100%;")
+															select(multiple="multiple" name="update_node_list[]" style="width:100%;")
 												tr
 													th 업데이트 일시
 													td
 														div#datetimepicker2.input-group.date
-															input.form-control(type='text')
+															input.form-control(type='text' name='update_time')
 															span.input-group-addon
-																span.glyphicon.glyphicon-calendar									
+																span.glyphicon.glyphicon-calendar				
+												tr
+													td(colspan="2" style="text-align:center;")
+														button(type="submit") 업로드
 								div(style="clear:both;")
 				.table-responsive(style="clear:both;")
 					table.table.table-striped
