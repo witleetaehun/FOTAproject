@@ -222,16 +222,27 @@ app.post('/upload' , function(req, res){
       uploadFInfo.updateDate = req.body.update_time
       var jsonInfo = JSON.stringify(uploadFInfo, null, "\t");
       fs.writeFileSync(__filePath+'/'+fName+'.json',jsonInfo,'utf-8');
-
-      exec("ls", function (err, stdout, stderr) {
-        console.log('stdout: ' + stdout);
-        console.log('stderr: ' + stderr);
-        if (error !== null) {
-            console.log('error: ' + err);
-        }
-      });
+      var gateway_addressList;
       
+      if(req.body.gateway_address.indexOf(',') != -1){ //multi send
+        gateway_addressList = req.body.gateway_address.split(",");
+        for(var ga in gateway_addressList){
+          exec("/home/geno/firm_uploader.sh "+req.file.filename+" "+gateway_addressList[ga], function (err, stdout, stderr) {
+            console.log('stdout: ' + stdout);
+            console.log('stderr: ' + stderr);        
+          });
+          
+        }
+      }
+      else{ //single send
+        gateway_addressList = req.body.gateway_address;
+        exec("/home/geno/firm_uploader.sh "+req.file.filename+" "+gateway_addressList, function (err, stdout, stderr) {
+          console.log('stdout: ' + stdout);
+          console.log('stderr: ' + stderr);        
+        });
+      }
 
+      
 
 			res.send("<script>alert('업로드 되었습니다.');location.href='/firmware';</script>");
 	    }
