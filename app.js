@@ -31,7 +31,7 @@ var express = require('express')
 
 
 var mysql     = require('mysql');
-var dbconfig  = require('./routes/database');
+var dbconfig  = require('./config/database');
 var connection= mysql.createConnection(dbconfig);
 
 var session = require('express-session');
